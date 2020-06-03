@@ -253,7 +253,7 @@ Therefore create a file `config/routes.yml`
   controller: flamingo.render(tpl="offers/offers")
 ```
 
-If you run the application again with `go run main.go serve`  and open `http://localhost:3322/`
+If you run the application again with `go run main.go serve`  and open `http://localhost:3322/` you should see a nice homepage with the two test products:
 
 ![demoshop template](3-homepage.png)
 

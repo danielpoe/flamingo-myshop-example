@@ -1,17 +1,18 @@
 # Start
 
 # About Flamingo Commerce
-Flamingo Commerce is a set of modules that allows you to build modern ecommerce portals.
-The architecture of Flamingo Commerce works well with so called "headless" ecommerce APIs and microservice oriented architectures.
+Flamingo Commerce is an e-commerce framework written in go.
+It includes a set of modules that allows you to build flexible e-commerce portals.
+The architecture of Flamingo Commerce works well with so called "headless" ecommerce APIs or microservice oriented architectures.
+This is because you can implement various adapters to use the e-commerce features together with existing services or APIs.
 Flamingo Commerce is build on top of Flamingo (a web framework based on Go).
 
 # About this article
-In this post you will learn how you can use Flamingo Commerce to build an ecommerce Webshop.
-Also you will learn on an example how individual adapters can be used to connect the webshop to any data sources.
+In this post you will learn how you can use Flamingo Commerce to build an e-commerce Webshop.
 
-We will start step by step with an empty project - ending up with a workable shop - including a HTML view and a full featured graphQL API
-We will also learn how to work with the product module and as an example will load products from a CSV file.
+We will start step by step with an empty project - and we will end up with a complete workable shop - including a HTML view and a full featured graphQL API and Rest API.
 
+You will also learn on an example how individual adapters can be used to connect the webshop to any data sources: In this case we will load products from a CSV file
 
 # 1. Start a "myshop" project with products
 
@@ -24,11 +25,10 @@ go mod init myshop
 go get -v flamingo.me/flamingo-commerce/v3
 ```
 This created a new go module "myshop" and added "flamingo-commerce" as an dependency. 
-You can check this by opening the go.mod file inside your project.
+You can check this by opening the `go.mod` file inside your project.
 
-
-We will then start using the product module.
-Please create a file "main.go" inside your project with the following content:
+We will then kickstart the application and we will start by using the product module.
+Therefore create a file `main.go` inside your project with the following content:
 
 ```go
 package main
@@ -45,10 +45,10 @@ func main() {
 	})
 }
 ```
-The 3 lines inside the main func will initialize a Flamingo Application with the product module.
+This 3 lines inside the main func will initialize a Flamingo application with the product module.
 When starting your project the Flamingo default bootstrap will start.
 
-Lets try this and run flamingo
+Lets try this and run the application:
 
 `go run main.go`
 
@@ -59,12 +59,11 @@ You will see the list of available commands. You can run
 ![configuration dump](1-config-run.png)
 
 
-We will come back to the product module configuration in a minute.
-
+We will learn more about the configuration later.
 But for now lets try to run the application by:
 `go run main.go serve`
 
-You will see the following error "can not instantiate interface flamingo.me/flamingo-commerce/v3/product/domain.ProductService" together with a stack trace.
+You will see the following error `can not instantiate interface flamingo.me/flamingo-commerce/v3/product/domain.ProductService` together with a stack trace.
 
 That means that there is no ProductService registered yet. The ProductService is a so called Adapter that the product module needs in order to get products.
 For now we will enable the provided "FakeProductService" that just provides some dummy products.
@@ -86,7 +85,7 @@ commerce:
     fakeservice:
       enabled: true
 ```
-The first line sets disables the session cookie secure mode - this is required for local testing. 
+The first line disables the session cookie secure mode - this is required for local testing. 
 The rest configures the Flamingo Commerce product module and enables a dummy adapter that provides two fake products for testing purposes.
 
 You can now successfully start the application and try that out:

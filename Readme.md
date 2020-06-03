@@ -94,25 +94,28 @@ You can now successfully start the application and try that out:
 go run main.go serve
 ```
 
-and open the url to a product: 
-http://localhost:3322/product/fake_simple/typesimple-product.html
-http://localhost:3322/product/fake_configurable/typeconfigurable-product.html
+and open the url for a product single view:
+
+* http://localhost:3322/product/fake_simple/typesimple-product.html
+* http://localhost:3322/product/fake_configurable/typeconfigurable-product.html
 
 ![pdp data](2-pdp-data.png)
 
-What you will see is the plain data for a product single page. (The two example products are provided by the "FakeProductService")
-Since we have no template engine configured Flamingo will just output the data as JSON.
+What you see is the plain data for a product single page.
+Because we have no template engine configured, Flamingo will just output the data as JSON. (We will configure templates in step 3 of this tutorial)
 
-The products module also offers a Rest API to access product data: http://localhost:3322/api/v1/products/fake_configurable
+By the way the products module also offers a Rest API to access product data:
+
+* http://localhost:3322/api/v1/products/fake_configurable
 
 ## 2. Add more commerce functionality
-The next step that we are doing is adding more of the Flamingo Commerce packages:
+Now we want to add more Flamingo Commerce features. So we are going to include the following modules:
 
 * cart: Provides features to deal with a cart (supporting multiple deliveries)
 * category: Provides features to browse in a category tree
 * checkout: Provides a basic checkout controller with a typical flow
 
-Therefore edit again your project `main.go` file and add the missing modulse to the Bootstrap like this:
+Therefore edit again your project `main.go` file and add the missing modules to the Bootstrap like this:
 
 ```go
 package main
@@ -139,13 +142,15 @@ func main() {
 
 Like the product module also the other module provides several "ports" where adapters can be registered.
 The registered adapters are responsible for implementing the detail functionality of the modules: 
-For example there can be adapters for the cart, that work with the Magento Cart API or other adapters that work with shopify.
+For example there can be adapters for the cart module, that work with the Magento Cart API or the shopify API.
 
 For this example we are using the simple adapters that are included in the Flamingo Commerce packages (they are activated by configuration).
 So before we can use the newly added commerce modules, we need to configure the required adapters. 
 Therefore add the following configuration to your `config.config.yml`
 
 ```yaml
+flamingo.session.cookie.secure: false
+
 commerce:
   product:
     fakeservice:
